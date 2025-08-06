@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor Insurance Calculator - Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .result { background: #f0f8ff; padding: 10px; margin: 10px 0; border-radius: 3px; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Motor Insurance Premium Calculator - Test Suite</h1>
+    
+    <div class="test-section">
+        <h2>Test Case 1: Standard Vehicle (2020 Toyota)</h2>
+        <p><strong>Scenario:</strong> 2020 Toyota, KES 1,200,000 sum insured, Comprehensive coverage</p>
+        <button onclick="runTest1()">Run Test 1</button>
+        <div id="result1" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Case 2: Premium Vehicle (2023 Mercedes)</h2>
+        <p><strong>Scenario:</strong> 2023 Mercedes, KES 4,500,000 sum insured, Comprehensive coverage with add-ons</p>
+        <button onclick="runTest2()">Run Test 2</button>
+        <div id="result2" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Case 3: Older Vehicle (2005 Honda)</h2>
+        <p><strong>Scenario:</strong> 2005 Honda, KES 800,000 sum insured (should trigger TPO restriction)</p>
+        <button onclick="runTest3()">Run Test 3</button>
+        <div id="result3" class="result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Case 4: Rate Calculation Verification</h2>
+        <p><strong>Scenario:</strong> Verify bracket rates and calculations</p>
+        <button onclick="runTest4()">Run Test 4</button>
+        <div id="result4" class="result"></div>
+    </div>
+
+    <script>
+        // Simplified test version of the calculator
+        class TestCalculator {
+            constructor() {
+                this.insuranceRates = {
+                    BRITAM: {
+                        bracket1: 0.06,
+                        bracket2: 0.045,
+                        bracket3: 0.03,
+                        minPremium: 37500,
+                        excessProtector: 5000,
+                        addOns: {
+                            carHire: 5000,
+                            personalAccident: 3000,
+                            aaTowing: 2500,
+                            windscreenExtension: 1500,
+                            radioExtension: 1000
+                        }
+                    },
+                    CANON: {
+                        bracket1: 0.035,
+                        bracket2: 0.035,
+                        bracket3: 0.035,
+                        minPremium: 37500,
+                        excessProtector: 2500,
+                        addOns: {
+                            carHire: 5000,
+                            personalAccident: 3000,
+                            aaTowing: 2500,
+                            windscreenExtension: 1500,
+                            radioExtension: 1000
+                        }
+                    },
+                    PACIS: {
+                        bracket1: 0.06,
+                        bracket2: 0.035,
+                        bracket3: 0.03,
+                        minPremium: 30000,
+                        excessProtector: 2500,
+                        addOns: {
+                            carHire: 5000,
+                            personalAccident: 3000,
+                            aaTowing: 2500,
+                            windscreenExtension: 1500,
+                            radioExtension: 1000
+                        }
+                    }
+                };
+                this.GOVERNMENT_LEVY = 0.0045;
+                this.STAMP_DUTY = 40;
+            }
+
+            calculatePremium(insurer, sumInsured, addOns = []) {
+                const rates = this.insuranceRates[insurer];
+                
+                // Determine rate based on bracket
+                let rate;
+                if (sumInsured <= 1500000) {
+                    rate = rates.bracket1;
+                } else if (sumInsured <= 3000000) {
+                    rate = rates.bracket2;
+                } else {
+                    rate = rates.bracket3;
+                }
+
+                // Calculate basic premium
+                let basicPremium = sumInsured * rate;
+                basicPremium = Math.max(basicPremium, rates.minPremium);
+
+                // Calculate add-ons
+                let addOnsTotal = 0;
+                addOns.forEach(addOn => {
+                    switch (addOn) {
+                        case 'excessProtector':
+                            addOnsTotal += rates.excessProtector;
+                            break;
+                        case 'politicalViolence':
+                            addOnsTotal += Math.max(sumInsured * 0.0025, 2500);
+                            break;
+                        case 'carHire':
+                            addOnsTotal += rates.addOns.carHire;
+                            break;
+                        case 'personalAccident':
+                            addOnsTotal += rates.addOns.personalAccident;
+                            break;
+                        case 'aaTowing':
+                            addOnsTotal += rates.addOns.aaTowing;
+                            break;
+                        case 'windscreenExtension':
+                            addOnsTotal += rates.addOns.windscreenExtension;
+                            break;
+                        case 'radioExtension':
+                            addOnsTotal += rates.addOns.radioExtension;
+                            break;
+                    }
+                });
+
+                // Calculate government levy
+                const govLevy = (basicPremium + addOnsTotal) * this.GOVERNMENT_LEVY;
+
+                // Calculate total premium
+                const totalPremium = basicPremium + addOnsTotal + govLevy + this.STAMP_DUTY;
+
+                return {
+                    insurer: insurer,
+                    basicPremium: basicPremium,
+                    addOnsTotal: addOnsTotal,
+                    govLevy: govLevy,
+                    stampDuty: this.STAMP_DUTY,
+                    totalPremium: totalPremium,
+                    rate: rate
+                };
+            }
+
+            checkVehicleEligibility(vehicleYear) {
+                const currentYear = new Date().getFullYear();
+                const vehicleAge = currentYear - vehicleYear;
+                return vehicleAge <= 15;
+            }
+        }
+
+        const testCalc = new TestCalculator();
+
+        function runTest1() {
+            const result = document.getElementById('result1');
+            const sumInsured = 1200000;
+            const addOns = ['excessProtector', 'politicalViolence'];
+            
+            const quotes = [];
+            ['BRITAM', 'CANON', 'PACIS'].forEach(insurer => {
+                quotes.push(testCalc.calculatePremium(insurer, sumInsured, addOns));
+            });
+
+            quotes.sort((a, b) => a.totalPremium - b.totalPremium);
+
+            let html = '<h3>Test Results:</h3>';
+            quotes.forEach(quote => {
+                html += `
+                    <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 3px;">
+                        <strong>${quote.insurer} Insurance</strong><br>
+                        Basic Premium: KES ${quote.basicPremium.toLocaleString()}<br>
+                        Add-ons: KES ${quote.addOnsTotal.toLocaleString()}<br>
+                        Gov Levy: KES ${quote.govLevy.toLocaleString()}<br>
+                        Stamp Duty: KES ${quote.stampDuty.toLocaleString()}<br>
+                        <strong>Total: KES ${quote.totalPremium.toLocaleString()}</strong><br>
+                        Rate: ${(quote.rate * 100).toFixed(1)}%
+                    </div>
+                `;
+            });
+
+            result.innerHTML = html;
+        }
+
+        function runTest2() {
+            const result = document.getElementById('result2');
+            const sumInsured = 4500000;
+            const addOns = ['excessProtector', 'politicalViolence', 'carHire', 'personalAccident', 'aaTowing'];
+            
+            const quotes = [];
+            ['BRITAM', 'CANON', 'PACIS'].forEach(insurer => {
+                quotes.push(testCalc.calculatePremium(insurer, sumInsured, addOns));
+            });
+
+            quotes.sort((a, b) => a.totalPremium - b.totalPremium);
+
+            let html = '<h3>Test Results:</h3>';
+            quotes.forEach(quote => {
+                html += `
+                    <div style="margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 3px;">
+                        <strong>${quote.insurer} Insurance</strong><br>
+                        Basic Premium: KES ${quote.basicPremium.toLocaleString()}<br>
+                        Add-ons: KES ${quote.addOnsTotal.toLocaleString()}<br>
+                        Gov Levy: KES ${quote.govLevy.toLocaleString()}<br>
+                        Stamp Duty: KES ${quote.stampDuty.toLocaleString()}<br>
+                        <strong>Total: KES ${quote.totalPremium.toLocaleString()}</strong><br>
+                        Rate: ${(quote.rate * 100).toFixed(1)}%
+                    </div>
+                `;
+            });
+
+            result.innerHTML = html;
+        }
+
+        function runTest3() {
+            const result = document.getElementById('result3');
+            const vehicleYear = 2005;
+            const isEligible = testCalc.checkVehicleEligibility(vehicleYear);
+            
+            let html = '<h3>Test Results:</h3>';
+            html += `<p><strong>Vehicle Year:</strong> ${vehicleYear}</p>`;
+            html += `<p><strong>Vehicle Age:</strong> ${new Date().getFullYear() - vehicleYear} years</p>`;
+            html += `<p><strong>Eligible for Comprehensive:</strong> ${isEligible ? 'Yes' : 'No'}</p>`;
+            
+            if (!isEligible) {
+                html += '<p style="color: red;"><strong>Result:</strong> Vehicle is too old for comprehensive coverage. TPO only.</p>';
+            }
+
+            result.innerHTML = html;
+        }
+
+        function runTest4() {
+            const result = document.getElementById('result4');
+            
+            let html = '<h3>Rate Structure Verification:</h3>';
+            
+            // Test different sum insured values
+            const testValues = [800000, 1200000, 2000000, 4000000];
+            
+            testValues.forEach(sumInsured => {
+                html += `<h4>Sum Insured: KES ${sumInsured.toLocaleString()}</h4>`;
+                
+                ['BRITAM', 'CANON', 'PACIS'].forEach(insurer => {
+                    const quote = testCalc.calculatePremium(insurer, sumInsured);
+                    html += `
+                        <div style="margin: 5px 0; padding: 5px; background: #f9f9f9;">
+                            ${insurer}: ${(quote.rate * 100).toFixed(1)}% → KES ${quote.totalPremium.toLocaleString()}
+                        </div>
+                    `;
+                });
+            });
+
+            result.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
