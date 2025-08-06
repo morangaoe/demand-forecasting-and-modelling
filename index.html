@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motor Insurance Premium Generator - Waumini Insurance Brokers</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Waumini Insurance Brokers</span>
+            </div>
+            <div class="header-info">
+                <span><i class="fas fa-phone"></i> +254 700 000 000</span>
+                <span><i class="fas fa-envelope"></i> info@waumini.co.ke</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <main class="main-container">
+        <!-- Page 1: Quote Form -->
+        <div id="quoteForm" class="page active">
+            <div class="container">
+                <div class="form-header">
+                    <h1>Motor Insurance Premium Calculator</h1>
+                    <p>Get instant quotes from multiple insurers in Kenya</p>
+                </div>
+
+                <form id="insuranceForm" class="quote-form">
+                    <!-- Client Information Section -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-user"></i> Client Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="clientName">Full Name *</label>
+                                <input type="text" id="clientName" name="clientName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clientPhone">Phone Number *</label>
+                                <input type="tel" id="clientPhone" name="clientPhone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="clientEmail">Email Address</label>
+                                <input type="email" id="clientEmail" name="clientEmail">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vehicle Information Section -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-car"></i> Vehicle Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="vehicleMake">Vehicle Make *</label>
+                                <input type="text" id="vehicleMake" name="vehicleMake" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicleYear">Year of Manufacture *</label>
+                                <select id="vehicleYear" name="vehicleYear" required>
+                                    <option value="">Select Year</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicleClass">Vehicle Class *</label>
+                                <select id="vehicleClass" name="vehicleClass" required>
+                                    <option value="">Select Vehicle Class</option>
+                                    <option value="Motor Private">Motor Private</option>
+                                    <option value="Commercial">Commercial</option>
+                                    <option value="Motorcycle">Motorcycle</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coverage Information Section -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-umbrella"></i> Coverage Information</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="sumInsured">Sum Insured (KES) *</label>
+                                <input type="number" id="sumInsured" name="sumInsured" min="500000" step="50000" required>
+                                <small>Minimum: KES 500,000</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="coverType">Coverage Type *</label>
+                                <select id="coverType" name="coverType" required>
+                                    <option value="">Select Coverage</option>
+                                    <option value="Comprehensive">Comprehensive</option>
+                                    <option value="TPO">Third Party Only (TPO)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add-On Benefits Section -->
+                    <div class="form-section">
+                        <h2><i class="fas fa-plus-circle"></i> Additional Benefits</h2>
+                        <div class="addons-grid">
+                            <div class="addon-item">
+                                <input type="checkbox" id="excessProtector" name="addOns" value="excessProtector">
+                                <label for="excessProtector">
+                                    <strong>Excess Protector</strong>
+                                    <span>Waives deductible on approved claims</span>
+                                </label>
+                            </div>
+                            <div class="addon-item">
+                                <input type="checkbox" id="politicalViolence" name="addOns" value="politicalViolence">
+                                <label for="politicalViolence">
+                                    <strong>Political Violence & Terrorism</strong>
+                                    <span>Coverage for political unrest damage</span>
+                                </label>
+                            </div>
+                            <div class="addon-item">
+                                <input type="checkbox" id="carHire" name="addOns" value="carHire">
+                                <label for="carHire">
+                                    <strong>Car Hire Benefit</strong>
+                                    <span>Courtesy car during repairs</span>
+                                </label>
+                            </div>
+                            <div class="addon-item">
+                                <input type="checkbox" id="personalAccident" name="addOns" value="personalAccident">
+                                <label for="personalAccident">
+                                    <strong>Personal Accident</strong>
+                                    <span>Driver & passenger coverage</span>
+                                </label>
+                            </div>
+                            <div class="addon-item">
+                                <input type="checkbox" id="aaTowing" name="addOns" value="aaTowing">
+                                <label for="aaTowing">
+                                    <strong>AA Towing</strong>
+                                    <span>Roadside assistance</span>
+                                </label>
+                            </div>
+                            <div class="addon-item">
+                                <input type="checkbox" id="windscreenExtension" name="addOns" value="windscreenExtension">
+                                <label for="windscreenExtension">
+                                    <strong>Windscreen Extension</strong>
+                                    <span>Glass damage coverage</span>
+                                </label>
+                            </div>
+                            <div class="addon-item">
+                                <input type="checkbox" id="radioExtension" name="addOns" value="radioExtension">
+                                <label for="radioExtension">
+                                    <strong>Radio Extension</strong>
+                                    <span>Entertainment system coverage</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-calculator"></i>
+                            Generate Quote
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Page 2: Loading Screen -->
+        <div id="loadingScreen" class="page">
+            <div class="loading-container">
+                <div class="loading-content">
+                    <div class="loading-spinner">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2>Generating Your Quote</h2>
+                    <p>We're calculating premiums from multiple insurers...</p>
+                    <div class="loading-progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Results Page -->
+        <div id="resultsPage" class="page">
+            <div class="container">
+                <div class="results-header">
+                    <h1>Your Motor Insurance Quotes</h1>
+                    <p>Valid for 30 days from today</p>
+                </div>
+
+                <!-- Client Summary -->
+                <div class="client-summary">
+                    <h3><i class="fas fa-user"></i> Client Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="label">Name:</span>
+                            <span id="summaryName" class="value"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Phone:</span>
+                            <span id="summaryPhone" class="value"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Vehicle:</span>
+                            <span id="summaryVehicle" class="value"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="label">Sum Insured:</span>
+                            <span id="summarySumInsured" class="value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quotes Display -->
+                <div class="quotes-container">
+                    <div id="quotesList" class="quotes-grid">
+                        <!-- Quotes will be dynamically generated here -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="results-actions">
+                    <button id="newQuoteBtn" class="btn-secondary">
+                        <i class="fas fa-plus"></i>
+                        New Quote
+                    </button>
+                    <button id="downloadCSVBtn" class="btn-secondary">
+                        <i class="fas fa-download"></i>
+                        Download Data
+                    </button>
+                    <button id="contactBtn" class="btn-primary">
+                        <i class="fas fa-phone"></i>
+                        Contact Us
+                    </button>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h3><i class="fas fa-info-circle"></i> Need Help?</h3>
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Call Us</strong>
+                                <span>+254 700 000 000</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email Us</strong>
+                                <span>info@waumini.co.ke</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Visit Us</strong>
+                                <span>Nairobi, Kenya</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Waumini Insurance Brokers. All rights reserved.</p>
+            <p>Licensed by Insurance Regulatory Authority (IRA)</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
