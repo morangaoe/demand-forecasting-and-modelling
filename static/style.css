@@ -1,0 +1,35 @@
+:root{
+  --bg:#0b0f19;
+  --panel:#11182a;
+  --text:#e5e7eb;
+  --muted:#8b95a7;
+  --brand:#7c3aed;
+  --accent:#22d3ee;
+  --card:#0f172a;
+  --border:#1f2937;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+.container{max-width:960px;margin:0 auto;padding:24px}
+.site-header{background:linear-gradient(90deg,var(--panel),#0e1222 60%,var(--panel));border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{color:#fff;text-decoration:none;font-weight:700;letter-spacing:.2px}
+h1,h2{margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;transition:transform .1s ease, border-color .2s ease}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card-title{font-weight:600;margin-bottom:8px}
+.card-desc{color:var(--muted);font-size:14px;min-height:44px}
+.rating{display:flex;gap:8px;align-items:center;margin-top:8px}
+.stars{color:#facc15}
+.item header .muted, .muted{color:var(--muted)}
+.rate-box{margin:24px 0;padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--panel)}
+.star-input{display:flex;gap:6px;margin:8px 0}
+.star-btn{font-size:28px;line-height:1;background:transparent;border:0;cursor:pointer;color:#9ca3af}
+.star-btn.active,.star-btn:hover,.star-btn:hover ~ .star-btn{color:#fbbf24}
+textarea{width:100%;background:#0b1222;border:1px solid var(--border);color:var(--text);border-radius:8px;padding:10px;margin-top:8px}
+.actions{margin-top:10px}
+.btn{background:var(--brand);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+.site-footer{border-top:1px solid var(--border);padding:24px 0;margin-top:48px;color:var(--muted)}
+.comments{list-style:none;padding-left:0;display:grid;gap:10px}
+.comments li{padding:10px;border:1px solid var(--border);background:var(--card);border-radius:8px}

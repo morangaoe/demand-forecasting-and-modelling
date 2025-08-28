@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Items</h1>
+<div class="grid">
+    {% for item in items %}
+    <a class="card" href="/item/{{ item.id }}">
+        <div class="card-title">{{ item.name }}</div>
+        <div class="card-desc">{{ item.description }}</div>
+        <div class="rating">
+            <span class="stars" data-score="{{ item.avg_rating }}"></span>
+            <span class="meta">{{ item.avg_rating }} ({{ item.rating_count }})</span>
+        </div>
+    </a>
+    {% else %}
+    <p>No items yet.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
