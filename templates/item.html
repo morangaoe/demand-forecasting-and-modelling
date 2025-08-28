@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="item">
+    <header>
+        <h1>{{ item.name }}</h1>
+        <p class="muted">{{ item.description }}</p>
+        <p class="rating">
+            <span class="stars" data-score="{{ item.avg_rating }}"></span>
+            <span class="meta">Average {{ item.avg_rating }} from {{ item.rating_count }} ratings</span>
+        </p>
+    </header>
+
+    <section class="rate-box">
+        <h2>Leave a rating</h2>
+        <form id="rate-form" action="/rate" method="post">
+            <input type="hidden" name="item_id" value="{{ item.id }}" />
+            <div class="star-input" data-selected="0" data-item="{{ item.id }}">
+                {% for n in range(1,6) %}
+                <button type="button" class="star-btn" data-score="{{ n }}" aria-label="{{ n }} star">☆</button>
+                {% endfor %}
+            </div>
+            <input type="hidden" name="score" id="score-input" value="0" />
+            <textarea name="comment" placeholder="Optional comment" rows="3"></textarea>
+            <div class="actions">
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+        <p id="rate-feedback" class="muted" hidden>Thanks! Your rating was recorded.</p>
+    </section>
+
+    <section>
+        <h2>Recent comments</h2>
+        <ul class="comments">
+            {% for r in comments %}
+            <li>
+                <span class="stars" data-score="{{ r.score }}"></span>
+                {% if r.comment %}<span>{{ r.comment }}</span>{% endif %}
+                <time class="muted">{{ r.created_at }}</time>
+            </li>
+            {% else %}
+            <li class="muted">No comments yet.</li>
+            {% endfor %}
+        </ul>
+    </section>
+</article>
+{% endblock %}
